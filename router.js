@@ -9,5 +9,6 @@ router.delete('/deletebook/:id', books.delete)
 router.put('/book/:id', books.update)
 router.get('/book/title/:title', books.findByTitle)
 router.get('/book/author/:author', books.findByAuthor)
+router.delete('/deleteall', books.deleteAll)
 
 module.exports = router;

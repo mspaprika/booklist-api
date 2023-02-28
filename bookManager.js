@@ -81,6 +81,18 @@ exports.delete = function (req, res, next) {
     // })
 }
 
+exports.deleteAll = function (req, res, next) {
+    Book.deleteMany().then((book) => {
+        if (!book) {
+            return (next(createError(404, "Book entry not found.")))
+        }
+        res.send({
+            result: true
+        })
+    })
+}
+
+
 exports.update = function (req, res, next) {
     Book.findById(req.params.id).then((book) => {
         if (!book) {
@@ -99,20 +111,23 @@ exports.update = function (req, res, next) {
         })
     })
 }
-// if (book.id == req.params.id) {
-//     if (req.body.title) book.title = req.body.title
-//     if (req.body.author) book.author = req.body.author
-//     if (req.body.read) book.read = req.body.read
-//     if (req.body.link) book.link = req.body.link
-// }
-// books = books.map(book => {
-//     if (book.id == req.params.id) {
-//         if (req.body.title) book.title = req.body.title
-//         if (req.body.author) book.author = req.body.author
-//         if (req.body.read) book.read = req.body.read
-//         if (req.body.link) book.link = req.body.link
+// exports.update = function (req, res, next) {
+//     if (!req.body.title) {
+//         return (next(createError(404, "Book by this name not found")))
 //     }
-//     console.log(book)
+//     const bookEntry = books.find(book => book.id == req.params.id)
+//     if (!bookEntry) {
+//         return (next(createError(404, "Book not found")))
+//     }
+//     console.log(bookEntry)
+//     books = books.map(book => {
+//         if (book.id == req.params.id) {
+//             if (req.body.title) book.title = req.body.title
+//             if (req.body.author) book.author = req.body.author
+//             if (req.body.read) book.read = req.body.read
+//             if (req.body.link) book.link = req.body.link
+//         }
+//         console.log(book)
 //         return book
 //     })
 
@@ -120,7 +135,6 @@ exports.update = function (req, res, next) {
 //         result: true
 //     })
 // }
-// )}
 
 exports.findByTitle = function (req, res, next) {
     Book.find({ title: req.params.title }).then((book) => {
